@@ -18,3 +18,8 @@ export const newUserSchema = Joi.object({
         'any.only': "'passwordConfirmation' has to match 'password'",
     }),
 });
+
+export const userSchema = Joi.object({
+    email: Joi.string().trim().email().required(),
+    password: JoiPassword.string().trim().required(),
+});
