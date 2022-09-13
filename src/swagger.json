@@ -1,0 +1,117 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Repo Provas",
+        "description": "This API can be used to share tests between students",
+        "version": "1.0.0"
+    },
+    "servers": [{ "url": "https://repo-provas-db.herokuapp.com" }],
+    "tags": [{ "name": "auth", "description": "User authentication" }],
+    "paths": {
+        "/auth/register": {
+            "post": {
+                "tags": ["auth"],
+                "summary": "Account creation",
+                "description": "This route is responsible for registering a new account",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/NewUser"
+                            },
+                            "examples": {
+                                "visitor": {
+                                    "value": {
+                                        "email": "visitor@com.br",
+                                        "password": "Password@123",
+                                        "passwordConfirmation": "Password@123"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": ["auth"],
+                "summary": "Account access",
+                "description": "This route is responsible for logging into app",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "visitor": {
+                                    "value": {
+                                        "email": "visitor@com.br",
+                                        "password": "Password@123"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "NewUser": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "string" },
+                    "email": { "type": "string" },
+                    "password": {
+                        "type": "string",
+                        "description": "8 to 24 characters. Must include uppercase and lowercase letters, a number and a special character. Allowed special characters: ! @ # $ % W"
+                    },
+                    "passwordConfirmation": {
+                        "type": "string",
+                        "description": "Same as password"
+                    }
+                }
+            },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "string" },
+                    "email": { "type": "string" },
+                    "password": { "type": "string" }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}
