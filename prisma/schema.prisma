@@ -18,3 +18,68 @@ model User {
 
   @@map("users")
 }
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  tests Test[]
+
+  disciplines Discipline[]
+
+  @@map("categories")
+}
+
+model Term {
+  id          Int          @id @default(autoincrement())
+  number      Int          @unique
+  disciplines Discipline[]
+
+  @@map("terms")
+}
+
+model Discipline {
+  id                 Int                 @id @default(autoincrement())
+  name               String              @unique
+  termId             Int
+  term               Term                @relation(fields: [termId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  teacherDisciplines TeacherDiscipline[]
+
+  categories Category[]
+  teachers   Teacher[]
+
+  @@map("disciplines")
+}
+
+model Teacher {
+  id                Int                 @id @default(autoincrement())
+  name              String              @unique
+  TeacherDiscipline TeacherDiscipline[]
+
+  disciplines Discipline[]
+
+  @@map("teachers")
+}
+
+model TeacherDiscipline {
+  id           Int        @id @default(autoincrement())
+  teacherId    Int
+  teacher      Teacher    @relation(fields: [teacherId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  disciplineId Int
+  discipline   Discipline @relation(fields: [disciplineId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  tests        Test[]
+
+  @@unique([teacherId, disciplineId])
+  @@map("teachersDisciplines")
+}
+
+model Test {
+  id                  Int               @id @default(autoincrement())
+  name                String
+  pdfUrl              String            @unique
+  categoryId          Int
+  category            Category          @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  teacherDisciplineId Int
+  teacherDiscipline   TeacherDiscipline @relation(fields: [teacherDisciplineId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("tests")
+}
