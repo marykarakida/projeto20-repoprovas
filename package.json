@@ -7,10 +7,10 @@
         "dev": "ts-node-dev --respawn --transpile-only --exit-child --ignore-watch node_modules ./src/server.ts",
         "build": "tsc && npx prisma generate && npx prisma migrate deploy",
         "start": "node dist/server.js",
-        "test": "dotenv -e .env.test prisma migrate dev && dotenv -e .env.test prisma db seed && dotenv -e .env.test jest"
+        "test": "dotenv -e .env.test prisma migrate dev && dotenv -e .env.test prisma db seed && dotenv -e .env.test jest --watch"
     },
     "prisma": {
-        "seed": "ts-node-dev prisma/sedd.ts"
+        "seed": "ts-node-dev prisma/seed.ts"
     },
     "keywords": [],
     "author": "",
