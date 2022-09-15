@@ -1,7 +1,7 @@
+import { User } from '@prisma/client';
+
 import * as userRepository from '../../repositories/userRepository';
 import { CustomError } from '../../middlewares/errorHandlerMiddleware';
-
-import { User } from '../../types/userType';
 
 export async function ensureNewUserisUnique(email: string): Promise<void> {
     const duplicatedUser = await userRepository.findUserByEmail(email);

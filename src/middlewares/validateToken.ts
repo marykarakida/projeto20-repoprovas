@@ -20,7 +20,7 @@ export async function validateToken(req: Request, res: Response, next: NextFunct
     }
 
     try {
-        const payload = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as string);
+        const payload = jwt.verify(token, process.env.TOKEN_SECRET as string);
         const user = await userService.findUserById((payload as IToken).id);
 
         if (!user) {

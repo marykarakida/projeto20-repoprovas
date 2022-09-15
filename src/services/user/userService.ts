@@ -1,10 +1,16 @@
+import { User } from '@prisma/client';
+
+import * as businessRules from './businessRules';
 import * as userRepository from '../../repositories/userRepository';
 import { CustomError } from '../../middlewares/errorHandlerMiddleware';
 
-import * as businessRules from './businessRules';
 import { TUserDetail } from '../../types/userType';
 import { hashPassword, validatePassword } from '../../utils/encryptUtils';
 import { generateToken } from '../../utils/jwtUtils';
+
+export async function findUserById(id: number): Promise<User | null> {
+    return userRepository.findUserById(id);
+}
 
 export async function register(userData: TUserDetail): Promise<void> {
     const { email, password } = userData;
