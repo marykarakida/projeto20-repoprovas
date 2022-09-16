@@ -25,6 +25,7 @@ model Category {
   tests Test[]
 
   disciplines Discipline[]
+  teacher     Teacher[]
 
   @@map("categories")
 }
@@ -56,6 +57,7 @@ model Teacher {
   TeacherDiscipline TeacherDiscipline[]
 
   disciplines Discipline[]
+  categories  Category[]
 
   @@map("teachers")
 }
