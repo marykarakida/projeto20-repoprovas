@@ -53,11 +53,17 @@ async function main() {
 
     await client.teacher.update({
         where: { name: 'Diego Pinho' },
-        data: { disciplines: { connect: [{ name: 'HTML e CSS' }, { name: 'JavaScript' }, { name: 'React' }] } },
+        data: {
+            disciplines: { connect: [{ name: 'HTML e CSS' }, { name: 'JavaScript' }, { name: 'React' }] },
+            categories: { connect: [{ name: 'Projeto' }, { name: 'Prática' }, { name: 'Recuperação' }] },
+        },
     });
     await client.teacher.update({
         where: { name: 'Diego Pinho' },
-        data: { disciplines: { connect: [{ name: 'Humildade' }, { name: 'Planejamento' }, { name: 'Autoconfiança' }] } },
+        data: {
+            disciplines: { connect: [{ name: 'Humildade' }, { name: 'Planejamento' }, { name: 'Autoconfiança' }] },
+            categories: { connect: [{ name: 'Projeto' }, { name: 'Prática' }, { name: 'Recuperação' }] },
+        },
     });
 
     await client.teacherDiscipline.upsert({
