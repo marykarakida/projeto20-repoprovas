@@ -1,6 +1,11 @@
-import client from '../config/prisma';
+import { User } from '@prisma/client';
 
-import { User, TUserDetail } from '../types/userType';
+import client from '../config/prisma';
+import { TUserDetail } from '../types/userType';
+
+export async function findUserById(id: number): Promise<User | null> {
+    return client.user.findUnique({ where: { id } });
+}
 
 export async function findUserByEmail(email: string): Promise<User | null> {
     return client.user.findUnique({ where: { email } });
