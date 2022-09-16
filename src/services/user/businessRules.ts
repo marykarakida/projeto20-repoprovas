@@ -3,10 +3,10 @@ import { User } from '@prisma/client';
 import * as userRepository from '../../repositories/userRepository';
 import { CustomError } from '../../middlewares/errorHandlerMiddleware';
 
-export async function ensureNewUserisUnique(email: string): Promise<void> {
+export async function ensureNewUserIsUnique(email: string): Promise<void> {
     const duplicatedUser = await userRepository.findUserByEmail(email);
     if (duplicatedUser) {
-        throw CustomError('error_conflict', 'Bad Request');
+        throw CustomError('error_conflict', 'Conflict');
     }
 }
 
