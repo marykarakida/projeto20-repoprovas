@@ -20,6 +20,23 @@ export async function createTest(testData: ITestCreateData): Promise<void> {
     await testRepository.insertTest({ name, pdfUrl, categoryId, teacherDisciplineId: relation.id });
 }
 
+export async function getTestsGroupedByTeacher() {
+    const testsGroupedByTeacher = await testRepository.findTestsGroupedByTeacher();
+
+    console.log(testsGroupedByTeacher);
+    const result = testsGroupedByTeacher.map(({ id, categories, ...rest }) => ({
+        ...rest,
+        categories: categories.map(({ tests, ...rest }) => ({
+            ...rest,
+            tests: tests
+                .filter(({ teacherDiscipline: { teacherId } }) => teacherId === id)
+                .map(({ teacherDiscipline: { discipline }, ...rest }) => ({ ...rest, discipline })),
+        })),
+    }));
+
+    return result;
+}
+
 export async function getTestsGroupedByTerm() {
     const testsGroupedByTerm = await testRepository.findTestsGroupedByTerm();
 

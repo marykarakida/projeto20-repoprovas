@@ -7,9 +7,30 @@ export async function findTestByPdfUrl(pdfUrl: string): Promise<Test | null> {
     return client.test.findUnique({ where: { pdfUrl } });
 }
 
+export async function findTestsGroupedByTeacher() {
+    return client.teacher.findMany({
+        include: {
+            categories: {
+                select: {
+                    id: true,
+                    name: true,
+                    tests: {
+                        select: {
+                            id: true,
+                            name: true,
+                            pdfUrl: true,
+                            teacherDiscipline: { select: { teacherId: true, discipline: { select: { id: true, name: true } } } },
+                        },
+                    },
+                },
+            },
+        },
+    });
+}
+
 export async function findTestsGroupedByTerm() {
     return client.term.findMany({
-        include: {
+        select: {
             disciplines: {
                 include: { categories: { include: { tests: { include: { teacherDiscipline: { include: { teacher: true } } } } } } },
             },
