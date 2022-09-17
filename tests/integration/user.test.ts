@@ -4,6 +4,8 @@ import app from '../../src/app';
 
 import { createUser, insertUser } from '../factories/userFactory';
 
+const agent = supertest(app);
+
 describe('/auth', () => {
     beforeEach(async () => {
         await client.$executeRaw`TRUNCATE TABLE "users"`;
@@ -18,9 +20,7 @@ describe('/auth', () => {
             it('should return status code 201 and create user account', async () => {
                 const newUser = createUser();
 
-                const result = await supertest(app)
-                    .post('/auth/register')
-                    .send({ ...newUser, passwordConfirmation: newUser.password });
+                const result = await agent.post('/auth/register').send({ ...newUser, passwordConfirmation: newUser.password });
                 expect(result.status).toBe(201);
 
                 const createdUser = await client.user.findUnique({ where: { email: newUser.email } });
@@ -32,7 +32,7 @@ describe('/auth', () => {
             it('should return status code 422', async () => {
                 const newUser = {};
 
-                const result = await supertest(app).post('/auth/register').send(newUser);
+                const result = await agent.post('/auth/register').send(newUser);
                 expect(result.status).toBe(422);
             });
         });
@@ -42,9 +42,7 @@ describe('/auth', () => {
                 const newUser = createUser();
                 await insertUser(newUser);
 
-                const result = await supertest(app)
-                    .post('/auth/register')
-                    .send({ ...newUser, passwordConfirmation: newUser.password });
+                const result = await agent.post('/auth/register').send({ ...newUser, passwordConfirmation: newUser.password });
                 expect(result.status).toBe(409);
             });
         });
@@ -56,7 +54,7 @@ describe('/auth', () => {
                 const newUser = createUser();
                 await insertUser(newUser);
 
-                const result = await supertest(app).post('/auth/login').send(newUser);
+                const result = await agent.post('/auth/login').send(newUser);
                 expect(result.status).toBe(200);
                 expect(typeof result.body.token).toBe('string');
             });
@@ -66,7 +64,7 @@ describe('/auth', () => {
             it('should return status code 422', async () => {
                 const wrongUser = {};
 
-                const result = await supertest(app).post('/auth/login').send(wrongUser);
+                const result = await agent.post('/auth/login').send(wrongUser);
                 expect(result.status).toBe(422);
             });
         });
@@ -78,7 +76,7 @@ describe('/auth', () => {
 
                 const wrongUser = createUser('invalid-email');
 
-                const result = await supertest(app).post('/auth/login').send(wrongUser);
+                const result = await agent.post('/auth/login').send(wrongUser);
                 expect(result.status).toBe(403);
             });
         });
@@ -90,7 +88,7 @@ describe('/auth', () => {
 
                 const wrongUser = createUser('invalid-pwd');
 
-                const result = await supertest(app).post('/auth/login').send(wrongUser);
+                const result = await agent.post('/auth/login').send(wrongUser);
                 expect(result.status).toBe(403);
             });
         });

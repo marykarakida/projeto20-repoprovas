@@ -6,6 +6,8 @@ import { createInsertTestData, createTest, insertTest } from '../factories/testF
 import { createUser, insertUser } from '../factories/userFactory';
 import { generateToken } from '../../src/utils/jwtUtils';
 
+const agent = supertest(app);
+
 describe('/tests', () => {
     beforeEach(async () => {
         await client.$executeRaw`TRUNCATE TABLE "users"`;
@@ -25,7 +27,7 @@ describe('/tests', () => {
 
                 const newTest = createInsertTestData();
 
-                const result = await supertest(app)
+                const result = await agent
                     .post('/tests')
                     .set({ Authorization: `Bearer ${token}` })
                     .send(newTest);
@@ -41,7 +43,7 @@ describe('/tests', () => {
 
                 const newTest = createInsertTestData();
 
-                const result = await supertest(app)
+                const result = await agent
                     .post('/tests')
                     .set({ Authorization: `Bearer ${token}` })
                     .send(newTest);
@@ -57,7 +59,7 @@ describe('/tests', () => {
 
                 const newTest = {};
 
-                const result = await supertest(app)
+                const result = await agent
                     .post('/tests')
                     .set({ Authorization: `Bearer ${token}` })
                     .send(newTest);
@@ -73,7 +75,7 @@ describe('/tests', () => {
 
                 const newTest = createInsertTestData('invalid-category');
 
-                const result = await supertest(app)
+                const result = await agent
                     .post('/tests')
                     .set({ Authorization: `Bearer ${token}` })
                     .send(newTest);
@@ -92,11 +94,61 @@ describe('/tests', () => {
 
                 const duplicatedTest = createInsertTestData('valid', newTest.pdfUrl);
 
-                const result = await supertest(app)
+                const result = await agent
                     .post('/tests')
                     .set({ Authorization: `Bearer ${token}` })
                     .send(duplicatedTest);
                 expect(result.status).toBe(409);
+            });
+        });
+    });
+
+    describe('GET /tests/terms', () => {
+        describe('given that user is authenticated', () => {
+            it('should return status code 200 and list of tests grouped by terms', async () => {
+                const newUser = createUser();
+                const insertedUser = await insertUser(newUser);
+                const token = generateToken({ id: insertedUser.id });
+
+                const result = await agent.get('/tests/terms').set({ Authorization: `Bearer ${token}` });
+                expect(result.status).toBe(200);
+                expect(Array.isArray(result.body)).toBe(true);
+            });
+        });
+
+        describe('given that token is invalid', () => {
+            it('should return status code 401', async () => {
+                const newUser = createUser();
+                const insertedUser = await insertUser(newUser);
+                const token = generateToken({ id: insertedUser.id + 1 });
+
+                const result = await agent.get('/tests/terms').set({ Authorization: `Bearer ${token}` });
+                expect(result.status).toBe(401);
+            });
+        });
+    });
+
+    describe('GET /tests/teachers', () => {
+        describe('given that user is authenticated', () => {
+            it('should return status code 200 and list of tests grouped by teachers', async () => {
+                const newUser = createUser();
+                const insertedUser = await insertUser(newUser);
+                const token = generateToken({ id: insertedUser.id });
+
+                const result = await agent.get('/tests/teachers').set({ Authorization: `Bearer ${token}` });
+                expect(result.status).toBe(200);
+                expect(Array.isArray(result.body)).toBe(true);
+            });
+        });
+
+        describe('given that token is invalid', () => {
+            it('should return status code 401', async () => {
+                const newUser = createUser();
+                const insertedUser = await insertUser(newUser);
+                const token = generateToken({ id: insertedUser.id + 1 });
+
+                const result = await agent.get('/tests/teachers').set({ Authorization: `Bearer ${token}` });
+                expect(result.status).toBe(401);
             });
         });
     });
