@@ -30,9 +30,26 @@ export async function findTestsGroupedByTeacher() {
 
 export async function findTestsGroupedByTerm() {
     return client.term.findMany({
-        select: {
+        include: {
             disciplines: {
-                include: { categories: { include: { tests: { include: { teacherDiscipline: { include: { teacher: true } } } } } } },
+                select: {
+                    id: true,
+                    name: true,
+                    categories: {
+                        select: {
+                            id: true,
+                            name: true,
+                            tests: {
+                                select: {
+                                    id: true,
+                                    name: true,
+                                    pdfUrl: true,
+                                    teacherDiscipline: { select: { disciplineId: true, teacher: true } },
+                                },
+                            },
+                        },
+                    },
+                },
             },
         },
     });

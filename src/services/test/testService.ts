@@ -40,16 +40,15 @@ export async function getTestsGroupedByTeacher() {
 export async function getTestsGroupedByTerm() {
     const testsGroupedByTerm = await testRepository.findTestsGroupedByTerm();
 
-    const result = testsGroupedByTerm.map(({ disciplines, ...rest }) => ({
+    const result = testsGroupedByTerm.map(({ id, disciplines, ...rest }) => ({
         ...rest,
-        disciplines: disciplines.map(({ id, name, categories }) => ({
-            id,
-            name,
+        disciplines: disciplines.map(({ categories, ...rest }) => ({
+            ...rest,
             categories: categories.map(({ tests, ...rest }) => ({
                 ...rest,
                 tests: tests
                     .filter(({ teacherDiscipline: { disciplineId } }) => disciplineId === id)
-                    .map(({ teacherDiscipline: { ...teacher }, name, pdfUrl }) => ({ name, pdfUrl, teacher })),
+                    .map(({ teacherDiscipline: { teacher }, ...rest }) => ({ ...rest, teacher })),
             })),
         })),
     }));
