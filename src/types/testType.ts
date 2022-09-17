@@ -1,4 +1,4 @@
-import { Test } from '@prisma/client';
+import { Test, Term } from '@prisma/client';
 
 type TTestDetail = Omit<Test, 'id'>;
 type TTestCreateDetail = Omit<Test, 'id' | 'teacherDisciplineId'>;
