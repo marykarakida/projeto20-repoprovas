@@ -23,15 +23,18 @@ export async function createTest(testData: ITestCreateData): Promise<void> {
 export async function getTestsGroupedByTeacher() {
     const testsGroupedByTeacher = await testRepository.findTestsGroupedByTeacher();
 
-    console.log(testsGroupedByTeacher);
     const result = testsGroupedByTeacher.map(({ id, categories, ...rest }) => ({
         ...rest,
-        categories: categories.map(({ tests, ...rest }) => ({
-            ...rest,
-            tests: tests
-                .filter(({ teacherDiscipline: { teacherId } }) => teacherId === id)
-                .map(({ teacherDiscipline: { discipline }, ...rest }) => ({ ...rest, discipline })),
-        })),
+        categories: categories
+            .map(({ tests, ...rest }) => ({
+                ...rest,
+                tests: tests.filter(({ teacherDiscipline: { teacherId, discipline }, ...rest }) => {
+                    if (teacherId === id) {
+                        return { ...rest, discipline };
+                    }
+                }),
+            }))
+            .filter(({ tests }) => tests.length > 0),
     }));
 
     return result;
@@ -40,16 +43,20 @@ export async function getTestsGroupedByTeacher() {
 export async function getTestsGroupedByTerm() {
     const testsGroupedByTerm = await testRepository.findTestsGroupedByTerm();
 
-    const result = testsGroupedByTerm.map(({ id, disciplines, ...rest }) => ({
+    const result = testsGroupedByTerm.map(({ disciplines, ...rest }) => ({
         ...rest,
-        disciplines: disciplines.map(({ categories, ...rest }) => ({
+        disciplines: disciplines.map(({ id, categories, ...rest }) => ({
             ...rest,
-            categories: categories.map(({ tests, ...rest }) => ({
-                ...rest,
-                tests: tests
-                    .filter(({ teacherDiscipline: { disciplineId } }) => disciplineId === id)
-                    .map(({ teacherDiscipline: { teacher }, ...rest }) => ({ ...rest, teacher })),
-            })),
+            categories: categories
+                .map(({ tests, ...rest }) => ({
+                    ...rest,
+                    tests: tests.filter(({ teacherDiscipline: { disciplineId, teacher }, ...rest }) => {
+                        if (disciplineId === id) {
+                            return { ...rest, teacher };
+                        }
+                    }),
+                }))
+                .filter(({ tests }) => tests.length > 0),
         })),
     }));
 

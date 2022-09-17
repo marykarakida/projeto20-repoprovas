@@ -21,10 +21,13 @@ export async function findTestsGroupedByTeacher() {
                             pdfUrl: true,
                             teacherDiscipline: { select: { teacherId: true, discipline: { select: { id: true, name: true } } } },
                         },
+                        orderBy: { teacherDiscipline: { discipline: { name: 'asc' } } },
                     },
                 },
+                orderBy: { name: 'asc' },
             },
         },
+        orderBy: { name: 'asc' },
     });
 }
 
@@ -46,12 +49,16 @@ export async function findTestsGroupedByTerm() {
                                     pdfUrl: true,
                                     teacherDiscipline: { select: { disciplineId: true, teacher: true } },
                                 },
+                                orderBy: { teacherDiscipline: { teacher: { name: 'asc' } } },
                             },
                         },
+                        orderBy: { name: 'asc' },
                     },
                 },
+                orderBy: { name: 'asc' },
             },
         },
+        orderBy: { number: 'asc' },
     });
 }
 
