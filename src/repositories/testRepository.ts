@@ -7,8 +7,29 @@ export async function findTestByPdfUrl(pdfUrl: string): Promise<Test | null> {
     return client.test.findUnique({ where: { pdfUrl } });
 }
 
+export async function findTests() {
+    const result = await client.test.findMany({
+        select: {
+            id: true,
+            name: true,
+            pdfUrl: true,
+            category: true,
+            teacherDiscipline: { select: { discipline: { select: { id: true, name: true, term: true } }, teacher: true } },
+        },
+        orderBy: { id: 'asc' },
+    });
+
+    const filteredResult = result.map(({ teacherDiscipline, ...rest }) => ({
+        ...rest,
+        discipline: teacherDiscipline.discipline,
+        teacher: teacherDiscipline.teacher,
+    }));
+
+    return filteredResult;
+}
+
 export async function findTestsGroupedByTeacher() {
-    return client.teacher.findMany({
+    const result = await client.teacher.findMany({
         include: {
             categories: {
                 select: {
@@ -29,10 +50,26 @@ export async function findTestsGroupedByTeacher() {
         },
         orderBy: { name: 'asc' },
     });
+
+    const filteredResult = result.map(({ id, categories, ...rest }) => ({
+        ...rest,
+        categories: categories
+            .map(({ tests, ...rest }) => ({
+                ...rest,
+                tests: tests.filter(({ teacherDiscipline: { teacherId, discipline }, ...rest }) => {
+                    if (teacherId === id) {
+                        return { ...rest, discipline };
+                    }
+                }),
+            }))
+            .filter(({ tests }) => tests.length > 0),
+    }));
+
+    return filteredResult;
 }
 
-export async function findTestsGroupedByTerm() {
-    return client.term.findMany({
+export async function findTestsGroupedByDiscipline() {
+    const result = await client.term.findMany({
         include: {
             disciplines: {
                 select: {
@@ -60,6 +97,25 @@ export async function findTestsGroupedByTerm() {
         },
         orderBy: { number: 'asc' },
     });
+
+    const filteredResult = result.map(({ disciplines, ...rest }) => ({
+        ...rest,
+        disciplines: disciplines.map(({ id, categories, ...rest }) => ({
+            ...rest,
+            categories: categories
+                .map(({ tests, ...rest }) => ({
+                    ...rest,
+                    tests: tests.filter(({ teacherDiscipline: { disciplineId, teacher }, ...rest }) => {
+                        if (disciplineId === id) {
+                            return { ...rest, teacher };
+                        }
+                    }),
+                }))
+                .filter(({ tests }) => tests.length > 0),
+        })),
+    }));
+
+    return filteredResult;
 }
 
 export async function insertTest(pdfData: TTestDetail): Promise<void> {

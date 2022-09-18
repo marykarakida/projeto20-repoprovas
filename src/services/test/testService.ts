@@ -20,45 +20,20 @@ export async function createTest(testData: ITestCreateData): Promise<void> {
     await testRepository.insertTest({ name, pdfUrl, categoryId, teacherDisciplineId: relation.id });
 }
 
+export async function getTests() {
+    const tests = await testRepository.findTests();
+
+    return tests;
+}
+
 export async function getTestsGroupedByTeacher() {
     const testsGroupedByTeacher = await testRepository.findTestsGroupedByTeacher();
 
-    const result = testsGroupedByTeacher.map(({ id, categories, ...rest }) => ({
-        ...rest,
-        categories: categories
-            .map(({ tests, ...rest }) => ({
-                ...rest,
-                tests: tests.filter(({ teacherDiscipline: { teacherId, discipline }, ...rest }) => {
-                    if (teacherId === id) {
-                        return { ...rest, discipline };
-                    }
-                }),
-            }))
-            .filter(({ tests }) => tests.length > 0),
-    }));
-
-    return result;
+    return testsGroupedByTeacher;
 }
 
-export async function getTestsGroupedByTerm() {
-    const testsGroupedByTerm = await testRepository.findTestsGroupedByTerm();
+export async function getTestsGroupedByDiscipline() {
+    const testsGroupedByDiscipline = await testRepository.findTestsGroupedByDiscipline();
 
-    const result = testsGroupedByTerm.map(({ disciplines, ...rest }) => ({
-        ...rest,
-        disciplines: disciplines.map(({ id, categories, ...rest }) => ({
-            ...rest,
-            categories: categories
-                .map(({ tests, ...rest }) => ({
-                    ...rest,
-                    tests: tests.filter(({ teacherDiscipline: { disciplineId, teacher }, ...rest }) => {
-                        if (disciplineId === id) {
-                            return { ...rest, teacher };
-                        }
-                    }),
-                }))
-                .filter(({ tests }) => tests.length > 0),
-        })),
-    }));
-
-    return result;
+    return testsGroupedByDiscipline;
 }
