@@ -103,14 +103,14 @@ describe('/tests', () => {
         });
     });
 
-    describe('GET /tests/terms', () => {
-        describe('given that user is authenticated', () => {
-            it('should return status code 200 and list of tests grouped by terms', async () => {
+    describe('GET /tests', () => {
+        describe('given that user is authenticated and tests is not grouped', () => {
+            it('should return status code 200 and list of tests with its details', async () => {
                 const newUser = createUser();
                 const insertedUser = await insertUser(newUser);
                 const token = generateToken({ id: insertedUser.id });
 
-                const result = await agent.get('/tests/terms').set({ Authorization: `Bearer ${token}` });
+                const result = await agent.get('/tests').set({ Authorization: `Bearer ${token}` });
                 expect(result.status).toBe(200);
                 expect(Array.isArray(result.body)).toBe(true);
             });
@@ -122,33 +122,36 @@ describe('/tests', () => {
                 const insertedUser = await insertUser(newUser);
                 const token = generateToken({ id: insertedUser.id + 1 });
 
-                const result = await agent.get('/tests/terms').set({ Authorization: `Bearer ${token}` });
+                const result = await agent.get('/tests').set({ Authorization: `Bearer ${token}` });
                 expect(result.status).toBe(401);
             });
         });
     });
 
-    describe('GET /tests/teachers', () => {
+    describe('GET /tests?groupedBy=disciplines', () => {
+        describe('given that user is authenticated', () => {
+            it('should return status code 200 and list of tests grouped by disciplines', async () => {
+                const newUser = createUser();
+                const insertedUser = await insertUser(newUser);
+                const token = generateToken({ id: insertedUser.id });
+
+                const result = await agent.get('/tests?groupedBy=disciplines').set({ Authorization: `Bearer ${token}` });
+                expect(result.status).toBe(200);
+                expect(Array.isArray(result.body)).toBe(true);
+            });
+        });
+    });
+
+    describe('GET /tests?groupedBy=teachers', () => {
         describe('given that user is authenticated', () => {
             it('should return status code 200 and list of tests grouped by teachers', async () => {
                 const newUser = createUser();
                 const insertedUser = await insertUser(newUser);
                 const token = generateToken({ id: insertedUser.id });
 
-                const result = await agent.get('/tests/teachers').set({ Authorization: `Bearer ${token}` });
+                const result = await agent.get('/tests?groupedBy=teachers').set({ Authorization: `Bearer ${token}` });
                 expect(result.status).toBe(200);
                 expect(Array.isArray(result.body)).toBe(true);
-            });
-        });
-
-        describe('given that token is invalid', () => {
-            it('should return status code 401', async () => {
-                const newUser = createUser();
-                const insertedUser = await insertUser(newUser);
-                const token = generateToken({ id: insertedUser.id + 1 });
-
-                const result = await agent.get('/tests/teachers').set({ Authorization: `Bearer ${token}` });
-                expect(result.status).toBe(401);
             });
         });
     });
