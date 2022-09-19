@@ -1,0 +1,456 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "repoprovas",
+    "dateExported": "2022-09-19T17:51:32.941Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "f1b3f8a9-d0e9-4615-b34e-443c4907897b",
+            "name": "register - /register",
+            "containerId": "36129ead-0fe0-4124-acc1-9daca2cbf78e",
+            "created": "2022-09-13T19:13:55.224Z",
+            "sortNum": 20000,
+            "settings": {}
+        },
+        {
+            "_id": "36129ead-0fe0-4124-acc1-9daca2cbf78e",
+            "name": "auth - /auth",
+            "containerId": "",
+            "created": "2022-09-13T16:56:39.376Z",
+            "sortNum": 25000,
+            "settings": { "runOptions": { "delay": 300, "iterations": 1, "dataFilePath": "" } }
+        },
+        {
+            "_id": "35f30fda-2f5b-45a1-a796-da974d6f8fcd",
+            "name": "login - /login",
+            "containerId": "36129ead-0fe0-4124-acc1-9daca2cbf78e",
+            "created": "2022-09-13T20:21:33.620Z",
+            "sortNum": 30000,
+            "settings": {}
+        },
+        {
+            "_id": "f7bf0a57-3fb0-4001-84c2-8be789323d53",
+            "name": "tests - /tests",
+            "containerId": "",
+            "created": "2022-09-15T14:58:09.427Z",
+            "sortNum": 40000
+        },
+        {
+            "_id": "a6b083f0-54fa-4916-9b3f-2c81cc683cab",
+            "name": "create - /",
+            "containerId": "f7bf0a57-3fb0-4001-84c2-8be789323d53",
+            "created": "2022-09-15T15:42:30.956Z",
+            "sortNum": 60000,
+            "settings": {}
+        },
+        {
+            "_id": "9cc1d6b3-92f3-43da-88b1-eff7671a07fa",
+            "name": "getGroupedByDisciplines - ?groupedBy=disciplines",
+            "containerId": "f7bf0a57-3fb0-4001-84c2-8be789323d53",
+            "created": "2022-09-17T00:02:39.349Z",
+            "sortNum": 70000
+        },
+        {
+            "_id": "c26755dc-8fb0-49c3-a3d1-8650e09c9a52",
+            "name": "getGroupedByTeachers - ?groupedBy=teachers",
+            "containerId": "f7bf0a57-3fb0-4001-84c2-8be789323d53",
+            "created": "2022-09-19T17:23:35.190Z",
+            "sortNum": 80000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "a1532d17-8552-4d21-b97c-aab4feb040cd",
+            "colId": "2eafb4f4-96f3-4f51-8f05-d428a4d18b1a",
+            "containerId": "a6b083f0-54fa-4916-9b3f-2c81cc683cab",
+            "name": "401 - (invalid token)",
+            "url": "{{BASE_URL}}/tests",
+            "method": "POST",
+            "sortNum": 4375,
+            "created": "2022-09-15T15:49:10.808Z",
+            "modified": "2022-09-15T15:52:46.057Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTc0LCJpYXQiOjE2NjMyNTcxMDgsImV4cCI6MTY2MzI1NzEwOX0.x5g0w_U0_3qEFgeGMFWIPPMpwapjwliS_WKjG8ySe2c"
+                }
+            ],
+            "params": [],
+            "body": { "type": "json", "raw": "{}", "form": [] },
+            "tests": [{ "type": "res-code", "custom": "", "action": "equal", "value": "401" }]
+        },
+        {
+            "_id": "14135a6a-0d82-455c-8f60-a2a745ac2e29",
+            "colId": "2eafb4f4-96f3-4f51-8f05-d428a4d18b1a",
+            "containerId": "f1b3f8a9-d0e9-4615-b34e-443c4907897b",
+            "name": "/register - 422 (no fields)",
+            "url": "{{BASE_URL}}/auth/register",
+            "method": "POST",
+            "sortNum": 5000,
+            "created": "2022-09-13T19:16:16.217Z",
+            "modified": "2022-09-15T03:03:10.283Z",
+            "headers": [],
+            "params": [],
+            "body": { "type": "json", "raw": "{}", "form": [] },
+            "tests": [{ "type": "res-code", "custom": "", "action": "equal", "value": "422" }]
+        },
+        {
+            "_id": "5214d24a-b871-4af1-b752-9895783893c3",
+            "colId": "2eafb4f4-96f3-4f51-8f05-d428a4d18b1a",
+            "containerId": "35f30fda-2f5b-45a1-a796-da974d6f8fcd",
+            "name": "/login - 422 (no fields)",
+            "url": "{{BASE_URL}}/auth/login",
+            "method": "POST",
+            "sortNum": 5000,
+            "created": "2022-09-14T18:33:31.948Z",
+            "modified": "2022-09-15T03:03:45.260Z",
+            "headers": [],
+            "params": [],
+            "body": { "type": "json", "raw": "{}", "form": [] },
+            "tests": [{ "type": "res-code", "custom": "", "action": "equal", "value": "422" }]
+        },
+        {
+            "_id": "c7415b5d-246f-401f-8128-2544eb87e6cd",
+            "colId": "2eafb4f4-96f3-4f51-8f05-d428a4d18b1a",
+            "containerId": "a6b083f0-54fa-4916-9b3f-2c81cc683cab",
+            "name": "422 - (no fields)",
+            "url": "{{BASE_URL}}/tests",
+            "method": "POST",
+            "sortNum": 5000,
+            "created": "2022-09-15T15:42:30.956Z",
+            "modified": "2022-09-15T15:43:58.835Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "params": [],
+            "body": { "type": "json", "raw": "{}", "form": [] },
+            "tests": [{ "type": "res-code", "custom": "", "action": "equal", "value": "422" }]
+        },
+        {
+            "_id": "201e3c97-5e33-42b9-bbb3-9fa52d74c75f",
+            "colId": "2eafb4f4-96f3-4f51-8f05-d428a4d18b1a",
+            "containerId": "f1b3f8a9-d0e9-4615-b34e-443c4907897b",
+            "name": "/register - 422 (not email)",
+            "url": "{{BASE_URL}}/auth/register",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2022-09-13T17:11:37.525Z",
+            "modified": "2022-09-15T03:03:12.179Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"email\",\n  \"password\": \"Teste@123\",\n  \"passwordConfirmation\": \"Teste@123\"\n}",
+                "form": []
+            },
+            "tests": [{ "type": "res-code", "custom": "", "action": "equal", "value": "422" }]
+        },
+        {
+            "_id": "ab340dcb-ded7-41e8-87aa-e1273142a923",
+            "colId": "2eafb4f4-96f3-4f51-8f05-d428a4d18b1a",
+            "containerId": "a6b083f0-54fa-4916-9b3f-2c81cc683cab",
+            "name": "422 - (not url)",
+            "url": "{{BASE_URL}}/tests",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2022-09-15T15:42:30.960Z",
+            "modified": "2022-09-15T16:02:45.960Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Prova supresa\",\n  \"pdfUrl\": \"url\",\n  \"categoryId\": 1,\n  \"disciplineId\": 1,\n  \"teacherId\": 1\n}",
+                "form": []
+            },
+            "tests": [{ "type": "res-code", "custom": "", "action": "equal", "value": "422" }]
+        },
+        {
+            "_id": "279c938d-fb5b-47cc-b95b-320ca1193b46",
+            "colId": "2eafb4f4-96f3-4f51-8f05-d428a4d18b1a",
+            "containerId": "a6b083f0-54fa-4916-9b3f-2c81cc683cab",
+            "name": "404 - (category non existant)",
+            "url": "{{BASE_URL}}/tests",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2022-09-15T15:42:30.962Z",
+            "modified": "2022-09-15T16:44:14.353Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Prova supresa\",\n  \"pdfUrl\": \"https://www.google.com/webhp?hl=en&sa=X&ved=0ahUKEwiR2_m6lpf6AhV3HbkGHcd6CNsQPAgI\",\n  \"categoryId\": 100000000000000000000000,\n  \"disciplineId\": 1,\n  \"teacherId\": 1\n}",
+                "form": []
+            },
+            "tests": [{ "type": "res-code", "custom": "", "action": "equal", "value": "422" }]
+        },
+        {
+            "_id": "2d52ce1f-afc2-43c5-8c24-4db943d3a87a",
+            "colId": "2eafb4f4-96f3-4f51-8f05-d428a4d18b1a",
+            "containerId": "a6b083f0-54fa-4916-9b3f-2c81cc683cab",
+            "name": "404 - (teacher non existant)",
+            "url": "{{BASE_URL}}/auth/register",
+            "method": "POST",
+            "sortNum": 55000,
+            "created": "2022-09-15T16:35:39.623Z",
+            "modified": "2022-09-15T16:44:16.244Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Prova supresa\",\n  \"pdfUrl\": \"https://www.google.com/webhp?hl=en&sa=X&ved=0ahUKEwiR2_m6lpf6AhV3HbkGHcd6CNsQPAgI\",\n  \"categoryId\": 1,\n  \"disciplineId\": 1,\n  \"teacherId\": 100000000000000000000000\n}",
+                "form": []
+            },
+            "tests": [{ "type": "res-code", "custom": "", "action": "equal", "value": "422" }]
+        },
+        {
+            "_id": "24d99d62-3ba1-4591-a074-a0cf3c95edc9",
+            "colId": "2eafb4f4-96f3-4f51-8f05-d428a4d18b1a",
+            "containerId": "9cc1d6b3-92f3-43da-88b1-eff7671a07fa",
+            "name": "401 - (invalid token) ",
+            "url": "{{BASE_URL}}/tests?groupedBy=disciplines",
+            "method": "GET",
+            "sortNum": 55000,
+            "created": "2022-09-19T17:22:33.541Z",
+            "modified": "2022-09-19T17:23:20.941Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTc0LCJpYXQiOjE2NjMyNTcxMDgsImV4cCI6MTY2MzI1NzEwOX0.x5g0w_U0_3qEFgeGMFWIPPMpwapjwliS_WKjG8ySe2c"
+                }
+            ],
+            "params": [{ "name": "groupedBy", "value": "disciplines", "isPath": false }],
+            "body": { "type": "json", "raw": "{}", "form": [] },
+            "tests": [{ "type": "res-code", "custom": "", "action": "equal", "value": "401" }]
+        },
+        {
+            "_id": "dab977f9-be0a-45b7-9e81-50347a376d71",
+            "colId": "2eafb4f4-96f3-4f51-8f05-d428a4d18b1a",
+            "containerId": "c26755dc-8fb0-49c3-a3d1-8650e09c9a52",
+            "name": "401 - (invalid token) ",
+            "url": "{{BASE_URL}}/tests?groupedBy=teachers",
+            "method": "GET",
+            "sortNum": 55000,
+            "created": "2022-09-19T17:23:35.190Z",
+            "modified": "2022-09-19T17:24:01.485Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTc0LCJpYXQiOjE2NjMyNTcxMDgsImV4cCI6MTY2MzI1NzEwOX0.x5g0w_U0_3qEFgeGMFWIPPMpwapjwliS_WKjG8ySe2c"
+                }
+            ],
+            "params": [{ "name": "groupedBy", "value": "teachers", "isPath": false }],
+            "body": { "type": "json", "raw": "{}", "form": [] },
+            "tests": [{ "type": "res-code", "custom": "", "action": "equal", "value": "401" }]
+        },
+        {
+            "_id": "7d09a625-4600-482b-86c6-0a28a5143660",
+            "colId": "2eafb4f4-96f3-4f51-8f05-d428a4d18b1a",
+            "containerId": "a6b083f0-54fa-4916-9b3f-2c81cc683cab",
+            "name": "404 - (discipline non existant)",
+            "url": "{{BASE_URL}}/auth/register",
+            "method": "POST",
+            "sortNum": 57500,
+            "created": "2022-09-15T16:35:42.166Z",
+            "modified": "2022-09-15T16:45:50.885Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Prova supresa\",\n  \"pdfUrl\": \"https://www.google.com/webhp?hl=en&sa=X&ved=0ahUKEwiR2_m6lpf6AhV3HbkGHcd6CNsQPAgI\",\n  \"categoryId\": 1,\n  \"disciplineId\": 100000000000000000000000,\n  \"teacherId\": 1\n}",
+                "form": []
+            },
+            "tests": [{ "type": "res-code", "custom": "", "action": "equal", "value": "422" }]
+        },
+        {
+            "_id": "c84814e3-cf3e-4e74-a2df-55ed70e0f4ea",
+            "colId": "2eafb4f4-96f3-4f51-8f05-d428a4d18b1a",
+            "containerId": "f1b3f8a9-d0e9-4615-b34e-443c4907897b",
+            "name": "/register - 422 (diff pwd confirmation)",
+            "url": "{{BASE_URL}}/auth/register",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2022-09-13T17:11:40.439Z",
+            "modified": "2022-09-15T03:03:19.036Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"visitor@com.br\",\n  \"password\": \"Test@2022\",\n  \"passwordConfirmation\": \"2022@Test\"\n}",
+                "form": []
+            },
+            "tests": [{ "type": "res-code", "custom": "", "action": "equal", "value": "422" }]
+        },
+        {
+            "_id": "57d259f8-e434-4926-b64c-bc22851f3105",
+            "colId": "2eafb4f4-96f3-4f51-8f05-d428a4d18b1a",
+            "containerId": "35f30fda-2f5b-45a1-a796-da974d6f8fcd",
+            "name": "/login - 400 (wrong pwd)",
+            "url": "{{BASE_URL}}/auth/login",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2022-09-13T20:21:33.627Z",
+            "modified": "2022-09-19T17:41:23.028Z",
+            "headers": [],
+            "params": [],
+            "body": { "type": "json", "raw": "{\n  \"email\": \"visitor@com.br\",\n  \"password\": \"123@Test\"\n}", "form": [] },
+            "tests": [{ "type": "res-code", "custom": "", "action": "equal", "value": "403" }]
+        },
+        {
+            "_id": "328565a8-925c-4046-b099-c020af24a675",
+            "colId": "2eafb4f4-96f3-4f51-8f05-d428a4d18b1a",
+            "containerId": "a6b083f0-54fa-4916-9b3f-2c81cc683cab",
+            "name": "404 - (teacher does not teach specified discipline)",
+            "url": "{{BASE_URL}}/auth/register",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2022-09-15T15:42:30.963Z",
+            "modified": "2022-09-15T16:44:38.632Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Prova supresa\",\n  \"pdfUrl\": \"https://www.google.com/webhp?hl=en&sa=X&ved=0ahUKEwiR2_m6lpf6AhV3HbkGHcd6CNsQPAgI\",\n  \"categoryId\": 6,\n  \"disciplineId\": 1,\n  \"teacherId\": 1\n}",
+                "form": []
+            },
+            "tests": [{ "type": "res-code", "custom": "", "action": "equal", "value": "422" }]
+        },
+        {
+            "_id": "fe876698-ddb8-455b-964c-8be5c0ca59f1",
+            "colId": "2eafb4f4-96f3-4f51-8f05-d428a4d18b1a",
+            "containerId": "35f30fda-2f5b-45a1-a796-da974d6f8fcd",
+            "name": "/login - 400 (wrong email) ",
+            "url": "{{BASE_URL}}/auth/login",
+            "method": "POST",
+            "sortNum": 65000,
+            "created": "2022-09-13T21:16:02.107Z",
+            "modified": "2022-09-19T17:41:32.753Z",
+            "headers": [],
+            "params": [],
+            "body": { "type": "json", "raw": "{\n  \"email\": \"visitor@com.br\",\n  \"password\": \"123@Test\"\n}", "form": [] },
+            "tests": [{ "type": "res-code", "custom": "", "action": "equal", "value": "403" }]
+        },
+        {
+            "_id": "6020fd71-35b0-4857-a68e-fa7b60c6c923",
+            "colId": "2eafb4f4-96f3-4f51-8f05-d428a4d18b1a",
+            "containerId": "f1b3f8a9-d0e9-4615-b34e-443c4907897b",
+            "name": "/register - 201 (created)",
+            "url": "{{BASE_URL}}/auth/register",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2022-09-13T16:56:54.383Z",
+            "modified": "2022-09-19T17:49:04.900Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"visitor@com.br\",\n  \"password\": \"Test@123\",\n  \"passwordConfirmation\": \"Test@123\"\n}",
+                "form": []
+            },
+            "tests": [{ "type": "res-code", "custom": "", "action": "equal", "value": "201" }]
+        },
+        {
+            "_id": "ead4c7f5-ea24-4347-bf8f-a084e646f1ec",
+            "colId": "2eafb4f4-96f3-4f51-8f05-d428a4d18b1a",
+            "containerId": "35f30fda-2f5b-45a1-a796-da974d6f8fcd",
+            "name": "/login - 200 (ok)",
+            "url": "{{BASE_URL}}/auth/login",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2022-09-13T20:21:33.628Z",
+            "modified": "2022-09-19T17:22:19.756Z",
+            "headers": [],
+            "params": [],
+            "body": { "type": "json", "raw": "{\n  \"email\": \"visitor@com.br\",\n  \"password\": \"Test@123\"\n}", "form": [] },
+            "tests": [
+                { "type": "res-code", "custom": "", "action": "equal", "value": "200" },
+                { "type": "res-body", "custom": "", "action": "isjson", "value": "true" },
+                { "type": "json-query", "custom": "json.token", "action": "istype", "value": "string" },
+                { "type": "set-env-var", "custom": "json.token", "action": "setto", "value": "{{TOKEN}}" }
+            ]
+        },
+        {
+            "_id": "419a623b-a2e7-40fd-8fd5-bf752271a0f3",
+            "colId": "2eafb4f4-96f3-4f51-8f05-d428a4d18b1a",
+            "containerId": "a6b083f0-54fa-4916-9b3f-2c81cc683cab",
+            "name": "201 - (created)",
+            "url": "{{BASE_URL}}/tests",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2022-09-15T15:42:30.964Z",
+            "modified": "2022-09-19T17:26:20.472Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Prova supresa\",\n  \"pdfUrl\": \"https://stackoverflow.com\",\n  \"categoryId\": 3,\n  \"disciplineId\": 4,\n  \"teacherId\": 2\n}",
+                "form": []
+            },
+            "tests": [{ "type": "res-code", "custom": "", "action": "equal", "value": "201" }]
+        },
+        {
+            "_id": "fcee75ab-ba87-4ef2-985c-0954f0076238",
+            "colId": "2eafb4f4-96f3-4f51-8f05-d428a4d18b1a",
+            "containerId": "f1b3f8a9-d0e9-4615-b34e-443c4907897b",
+            "name": "/register - 409 (conlict)",
+            "url": "{{BASE_URL}}/auth/register",
+            "method": "POST",
+            "sortNum": 80000,
+            "created": "2022-09-13T19:12:03.603Z",
+            "modified": "2022-09-19T17:22:13.998Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"visitor@com.br\",\n  \"password\": \"Test@123\",\n  \"passwordConfirmation\": \"Test@123\"\n}",
+                "form": []
+            },
+            "tests": [{ "type": "res-code", "custom": "", "action": "equal", "value": "409" }]
+        },
+        {
+            "_id": "f69bbcb0-e3ac-46f6-8120-638adb106141",
+            "colId": "2eafb4f4-96f3-4f51-8f05-d428a4d18b1a",
+            "containerId": "a6b083f0-54fa-4916-9b3f-2c81cc683cab",
+            "name": "409 - (conlict)",
+            "url": "{{BASE_URL}}/tests",
+            "method": "POST",
+            "sortNum": 80000,
+            "created": "2022-09-15T15:42:30.965Z",
+            "modified": "2022-09-15T16:47:50.725Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Prova supresa\",\n  \"pdfUrl\": \"https://www.google.com/webhp?hl=en&sa=X&ved=0ahUKEwiR2_m6lpf6AhV3HbkGHcd6CNsQPAgI\",\n  \"categoryId\": 1,\n  \"disciplineId\": 1,\n  \"teacherId\": 1\n}",
+                "form": []
+            },
+            "tests": [{ "type": "res-code", "custom": "", "action": "equal", "value": "409" }]
+        },
+        {
+            "_id": "ca02b9e2-160a-41ea-b1f8-70d4938d5334",
+            "colId": "2eafb4f4-96f3-4f51-8f05-d428a4d18b1a",
+            "containerId": "9cc1d6b3-92f3-43da-88b1-eff7671a07fa",
+            "name": "200 - ok",
+            "url": "{{BASE_URL}}/tests?groupedBy=disciplines",
+            "method": "GET",
+            "sortNum": 110000,
+            "created": "2022-09-17T00:03:57.180Z",
+            "modified": "2022-09-19T17:46:19.942Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "params": [{ "name": "groupedBy", "value": "disciplines", "isPath": false }],
+            "tests": [{ "type": "res-code", "custom": "", "action": "equal", "value": "200" }]
+        },
+        {
+            "_id": "649776ac-54f4-4037-a43a-bf9bb2338797",
+            "colId": "2eafb4f4-96f3-4f51-8f05-d428a4d18b1a",
+            "containerId": "c26755dc-8fb0-49c3-a3d1-8650e09c9a52",
+            "name": "200 - ok",
+            "url": "{{BASE_URL}}/tests?groupedBy=teachers",
+            "method": "GET",
+            "sortNum": 110000,
+            "created": "2022-09-19T17:23:35.191Z",
+            "modified": "2022-09-19T17:46:29.888Z",
+            "headers": [{ "name": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "params": [{ "name": "groupedBy", "value": "teachers", "isPath": false }],
+            "tests": [{ "type": "res-code", "custom": "", "action": "equal", "value": "200" }]
+        }
+    ],
+    "settings": { "headers": [], "tests": [], "envId": "6c05b341-a91b-4fc6-a52f-a1093c2ee796" }
+}
