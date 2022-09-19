@@ -6,7 +6,10 @@
         "version": "1.0.0"
     },
     "servers": [{ "url": "https://repo-provas-db.herokuapp.com" }],
-    "tags": [{ "name": "auth", "description": "User authentication" }],
+    "tags": [
+        { "name": "auth", "description": "User authentication" },
+        { "name": "tests", "description": "Everything about tests" }
+    ],
     "paths": {
         "/auth/register": {
             "post": {
@@ -78,6 +81,78 @@
                     }
                 }
             }
+        },
+        "/tests": {
+            "post": {
+                "tags": ["tests"],
+                "summary": "Test creation",
+                "description": "This route is responsible for uploading a new test",
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Test"
+                            },
+                            "examples": {
+                                "visitor": {
+                                    "value": {
+                                        "name": "Prova supresa",
+                                        "pdfUrl": "https://stackoverflow.com",
+                                        "categoryId": 1,
+                                        "disciplineId": 1,
+                                        "teacherId": 1
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["tests"],
+                "summary": "View tests",
+                "description": "This route is responsible for getting all tests",
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "name": "groupedBy",
+                        "in": "query",
+                        "description": "Group tests by disciplines or teachers"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "409": {
+                        "description": "Conflict"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -103,6 +178,16 @@
                     "id": { "type": "string" },
                     "email": { "type": "string" },
                     "password": { "type": "string" }
+                }
+            },
+            "Test": {
+                "type": "object",
+                "properties": {
+                    "name": { "type": "string" },
+                    "pdfUrl": { "type": "string" },
+                    "categoryId": { "type": "number" },
+                    "disciplineId": { "type": "number" },
+                    "teacherId": { "type": "number" }
                 }
             }
         },
