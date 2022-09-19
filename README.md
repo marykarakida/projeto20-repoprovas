@@ -1,4 +1,4 @@
-# projeto19-drivenpass-back
+# projeto20-repoprovas
 
 ## `Driven Pass API`
 
@@ -75,8 +75,9 @@ To run this project, you will need to add the following environment variables to
 
 ## `Tests (Thunder Client)`
 
-//
+import `thunder-collection_repoprovas.json` and `thunder-environment_repoprovas.json` in thunderclient
 
 ### ENV VARIABLES IN THUNDERCLIENT
 
-//
+-   TOKEN
+-   BASE_URL
