@@ -56,11 +56,9 @@ export async function findTestsGroupedByTeacher() {
         categories: categories
             .map(({ tests, ...rest }) => ({
                 ...rest,
-                tests: tests.filter(({ teacherDiscipline: { teacherId, discipline }, ...rest }) => {
-                    if (teacherId === id) {
-                        return { ...rest, discipline };
-                    }
-                }),
+                tests: tests
+                    .filter(({ teacherDiscipline: { teacherId } }) => teacherId === id)
+                    .map(({ teacherDiscipline: { discipline }, ...rest }) => ({ ...rest, discipline })),
             }))
             .filter(({ tests }) => tests.length > 0),
     }));
@@ -105,11 +103,9 @@ export async function findTestsGroupedByDiscipline() {
             categories: categories
                 .map(({ tests, ...rest }) => ({
                     ...rest,
-                    tests: tests.filter(({ teacherDiscipline: { disciplineId, teacher }, ...rest }) => {
-                        if (disciplineId === id) {
-                            return { ...rest, teacher };
-                        }
-                    }),
+                    tests: tests
+                        .filter(({ teacherDiscipline: { disciplineId } }) => disciplineId === id)
+                        .map(({ teacherDiscipline: { teacher }, ...rest }) => ({ ...rest, teacher })),
                 }))
                 .filter(({ tests }) => tests.length > 0),
         })),
